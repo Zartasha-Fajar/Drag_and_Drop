@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Drag & Drop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #drag-box {
+            width: 120px;
+            height: 120px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            border-radius: 10px;
+            user-select: none;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        #drag-box:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+        }
+
+        #drop-zone {
+            width: 250px;
+            height: 250px;
+            border: 3px dashed #007bff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            border-radius: 12px;
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        #drop-zone.drag-over {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Drag & Drop Demo</h2>
+    <div id="drag-box" draggable="true" aria-label="Draggable Box">Drag Me</div>
+    <div id="drop-zone" aria-label="Drop Zone">Drop Here</div>
+
+
+
+    <script>
+
+        let drag_box = document.querySelector("#drag-box")
+        let drop_zone = document.querySelector("#drop-zone")
+
+        drag_box.addEventListener("dragstart", (event) => {
+
+            drag_box.style.opacity = "0.5"
+        })
+
+        drag_box.addEventListener("dragend", () => {
+            drag_box.style.opacity = "1"
+        })
+
+        drop_zone.addEventListener("dragover", (event) => {
+            event.preventDefault()
+            drop_zone.classList.add("drop-over")
+        })
+
+        drop_zone.addEventListener("dragleave", () => {
+            drop_zone.classList.remove("drop-over")
+            console.log('working');
+
+
+        })
+
+        drop_zone.addEventListener("drop", (event) => {
+            event.preventDefault()
+            drop_zone.classList.remove("drop-over")
+            drop_zone.appendChild(drag_box)
+        })
+
+    </script>
+
+</body>
+
+</html>
